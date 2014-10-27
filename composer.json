@@ -5,7 +5,7 @@
         "doctrine/dbal": "2.4.*",
         "monolog/monolog": ">=1.0.0",
         "twig/twig": ">=1.8,<2.0-dev",
-        "twig/extensions": "1.0.*@dev",
+        "twig/extensions": "1.1.*@dev",
         "symfony/twig-bridge": "2.5.*@dev"
     },
     "autoload": {
