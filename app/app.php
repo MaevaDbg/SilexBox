@@ -1,4 +1,7 @@
 <?php
+/**
+ * CONFIG APP DEPENDENCIES
+ */
 use Silex\Application;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
