@@ -1,5 +1,10 @@
 <?php
+/**
+ * CONFIG PROD ENV
+ */
 use Silex\Provider\DoctrineServiceProvider;
+
+//Config BDD access for Doctrine
 $app->register(new DoctrineServiceProvider(), array(
     'db.options' => array(
         'driver' => 'pdo_mysql',
@@ -9,7 +14,4 @@ $app->register(new DoctrineServiceProvider(), array(
         'password' => '',
     ),
 ));
-
-$app['twig.path'] = array(__DIR__.'/../../src/view');
-$app['twig.options'] = array('cache' => __DIR__.'/../cache/twig');
 ?>
