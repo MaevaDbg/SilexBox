@@ -8,11 +8,17 @@ use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\MonologServiceProvider;
+use Silex\Provider\FormServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
+use Silex\Provider\TranslationServiceProvider;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 $app = new Application();
 
 $app->register(new ServiceControllerServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
+$app->register(new FormServiceProvider());
+$app->register(new ValidatorServiceProvider());
 
 //add Twig template engine
 $app->register(new TwigServiceProvider());
@@ -24,6 +30,11 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
     $twig->addExtension(new Twig_Extensions_Extension_Intl($app));
     return $twig;
 }));
+
+//add translation service
+$app->register(new TranslationServiceProvider(), array(
+    'locale_fallback' => array('fr'),
+));
 
 //add Session Service
 $app->register(new SessionServiceProvider());

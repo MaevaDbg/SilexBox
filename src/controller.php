@@ -1,10 +1,34 @@
 <?php
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Form\EmailSubscriptionType;
 
 $app->get('/', function () use ($app) {
     return $app['twig']->render('index.html.twig', array());
 })
 ->bind('homepage');
+
+
+/*==========================================
+=            EMAIL SUBSCRIPTION            =
+==========================================*/
+$app->match('/email-subscription', function (Request $request) use ($app) {
+
+    $form = $app['form.factory']->create(new EmailSubscriptionType($app));
+
+    $form->handleRequest($request);
+    if ($form->isValid()) {
+        $data = $form->getData();
+        return $app['twig']->render('email-subscription.html.twig', array('data' => $data));
+    }
+
+    return $app['twig']->render('email-subscription.html.twig', array('form' => $form->createView()));
+
+})
+->bind('email-subscription');
+/*-----  End of email subscription  ------*/
+
+
 
 $app->get('/hello/{name}', function ($name) use ($app) {
     $post = $app['db']->fetchAll('SELECT * FROM articles');
