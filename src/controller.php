@@ -3,9 +3,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Form\EmailSubscriptionType;
 
-$app->get('/', function () use ($app) {
+$app->get('/{_locale}', function () use ($app) {
     return $app['twig']->render('index.html.twig', array());
 })
+->assert('_locale', 'fr|en')
+->value('_locale', 'fr')
 ->bind('homepage');
 
 

@@ -20,6 +20,7 @@ $app->register(new UrlGeneratorServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
 
+
 //add Twig template engine
 $app->register(new TwigServiceProvider());
 $app['twig.path'] = array(__DIR__.'/../src/view'); //template dir
@@ -31,14 +32,28 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
     return $twig;
 }));
 
+
 //add translation service
 $app->register(new TranslationServiceProvider(), array(
+    //default lang
     'locale_fallback' => array('fr'),
 ));
+//define YAML-based language files
+$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+    $translator->addLoader('yaml', new YamlFileLoader());
+ 
+    // Ajout des fichiers de ressources de langue
+    $translator->addResource('yaml', __DIR__.'/../src/Locales/en.yml', 'en');
+    $translator->addResource('yaml', __DIR__.'/../src/Locales/fr.yml', 'fr');
+ 
+    return $translator;
+}));
+
 
 //add Session Service
 $app->register(new SessionServiceProvider());
 $app['session']->start();
+
 
 //add log for requests and errors
 $app->register(new MonologServiceProvider(), array(
