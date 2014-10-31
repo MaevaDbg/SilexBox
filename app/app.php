@@ -21,9 +21,12 @@ $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
 
 
+/*============================
+=            TWIG            =
+============================*/
 //add Twig template engine
 $app->register(new TwigServiceProvider());
-$app['twig.path'] = array(__DIR__.'/../src/view'); //template dir
+$app['twig.path'] = array(__DIR__.'/../src/View'); //template dir
 $app['twig.options'] = array('cache' => __DIR__.'/cache/twig'); //cache dir
 //add extensions for Twig
 $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
@@ -33,6 +36,9 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
 }));
 
 
+/*===================================
+=            TRANSLATION            =
+===================================*/
 //add translation service
 $app->register(new TranslationServiceProvider(), array(
     //default lang
@@ -50,11 +56,17 @@ $app['translator'] = $app->share($app->extend('translator', function($translator
 }));
 
 
+/*===============================
+=            SESSION            =
+===============================*/
 //add Session Service
 $app->register(new SessionServiceProvider());
 $app['session']->start();
 
 
+/*=================================
+=            ERROR LOG            =
+=================================*/
 //add log for requests and errors
 $app->register(new MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/logs/silex.log',

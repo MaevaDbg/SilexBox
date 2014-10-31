@@ -3,12 +3,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Form\EmailSubscriptionType;
 
+
+/*================================
+=            HOMEPAGE            =
+================================*/
 $app->get('/{_locale}', function () use ($app) {
     return $app['twig']->render('index.html.twig', array());
 })
 ->assert('_locale', 'fr|en')
 ->value('_locale', 'fr')
 ->bind('homepage');
+/*-----  End of homepage  ------*/
 
 
 /*==========================================
@@ -30,13 +35,6 @@ $app->match('/email-subscription', function (Request $request) use ($app) {
 ->bind('email-subscription');
 /*-----  End of email subscription  ------*/
 
-
-
-$app->get('/hello/{name}', function ($name) use ($app) {
-    $post = $app['db']->fetchAll('SELECT * FROM articles');
-    var_dump($post);
-    return 'Hello '.$app->escape($name);
-});
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
