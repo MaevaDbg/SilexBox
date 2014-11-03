@@ -12,6 +12,7 @@ use Silex\Provider\FormServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
 $app = new Application();
 
@@ -19,6 +20,24 @@ $app->register(new ServiceControllerServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
+
+
+/*====================================
+=            DOCTRINE ORM            =
+====================================*/
+$app->register(new DoctrineOrmServiceProvider, array(
+    "orm.proxies_dir" =>  __DIR__."/cache/doctrine/proxies",
+    "orm.em.options" => array(
+        "mappings" => array(
+            array(
+                "type"      => "annotation",
+                "namespace" => "Entity",
+                "path"      => __DIR__."/../src/Entity",
+            ),
+        ),
+    ),
+));
+
 
 
 /*============================

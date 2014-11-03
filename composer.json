@@ -18,7 +18,8 @@
     "autoload": {
         "psr-0": {
             "Repository": "src/",
-            "Form": "src/"
+            "Form": "src/",
+            "Entity": "src/"
          }
     }
 }
