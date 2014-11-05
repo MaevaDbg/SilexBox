@@ -25,6 +25,7 @@ $app->register(new ValidatorServiceProvider());
 /*====================================
 =            DOCTRINE ORM            =
 ====================================*/
+//add doctrine object relational mapper
 $app->register(new DoctrineOrmServiceProvider, array(
     "orm.proxies_dir" =>  __DIR__."/cache/doctrine/proxies",
     "orm.em.options" => array(

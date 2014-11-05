@@ -11,19 +11,7 @@ use Entity\Article;
 ================================*/
 $app->get('/{_locale}', function () use ($app) {
 
-    $article = new Article();
-    $article->setTitle("Mon titre");
-    $article->setExcerpt("Résumé");
-    $article->setDescription("Ma description");
-
-    $em = $app['orm.em'];
-
-    $em->persist($article);
-    $em->flush();
-
-    $articles = $em->getRepository("Entity\Article")->findAll();
-
-    return $app['twig']->render('index.html.twig', array("articles" => $articles));
+    return $app['twig']->render('index.html.twig');
 })
 ->assert('_locale', 'fr|en')
 ->value('_locale', 'fr')
@@ -51,36 +39,92 @@ $app->match('/email-subscription', function (Request $request) use ($app) {
 /*-----  End of email subscription  ------*/
 
 
-/*=============================
-=            ADMIN            =
-=============================*/
 
-//ADD ARTICLE
+
+/*==================================
+=            ADMIN HOME            =
+==================================*/
+$app->get('/admin', function (Request $request) use ($app) {
+
+    $em = $app['orm.em'];
+    $articles = $em->getRepository("Entity\Article")->findAll();
+
+    return $app['twig']->render('admin/index.html.twig', array('articles' => $articles));
+
+})
+->bind('admin');
+/*-----  End of admin home  ------*/
+
+
+/*===========================================
+=            ADMIN - ADD ARTICLE            =
+===========================================*/
 $app->match('/admin/add-article', function (Request $request) use ($app) {
 
     $form = $app['form.factory']->create(new ArticleType($app));
     $form->handleRequest($request);
+
     if ($form->isValid()) {
-        $data = $form->getData();
-        return $app['twig']->render('admin/article-add.html.twig', array('data' => $data));
+        $article = $form->getData();
+        $em = $app['orm.em'];
+
+        $em->persist($article);
+        $em->flush();
+        $app['session']->getFlashBag()->add('article', 'Votre article a bien été ajouté');
+        
+        return $app->redirect($app["url_generator"]->generate("admin"));
     }
 
     return $app['twig']->render('admin/article-add.html.twig', array('form' => $form->createView()));
     
 })
 ->bind('add-article');
+/*-----  End of admin add article  ------*/
 
-//UPDATE ARTICLE
-$app->get('/admin/update-article', function (Request $request) use ($app) {
+
+/*==============================================
+=            ADMIN - UPDATE ARTICLE            =
+==============================================*/
+$app->match('/admin/update-article/{id}', function ($id, Request $request) use ($app) {
+
+    $em = $app['orm.em'];
+    $article = $em->getRepository("Entity\Article")->findOneById($id);
+    
+    $form = $app['form.factory']->create(new ArticleType($app), $article);
+    $form->handleRequest($request);
+
+    if ($form->isValid()) {
+        $article = $form->getData();
+
+        $em->persist($article);
+        $em->flush();
+        $app['session']->getFlashBag()->add('article', 'Votre article a bien été modifié');
+
+        return $app->redirect($app["url_generator"]->generate("admin"));
+    }
+
+    return $app['twig']->render('admin/article-update.html.twig', array('form' => $form->createView()));
+
 })
 ->bind('update-article');
+/*-----  End of admin update article  ------*/
 
-//DELETE ARTICLE
-$app->get('/admin/delete-article', function (Request $request) use ($app) {
+
+/*==============================================
+=            ADMIN - DELETE ARTICLE            =
+==============================================*/
+$app->get('/admin/delete-article/{id}', function ($id, Request $request) use ($app) {
+
+    $em = $app['orm.em'];
+    $article = $em->getRepository("Entity\Article")->findOneById($id);
+    $em->remove($article);
+    $em->flush();
+    $app['session']->getFlashBag()->add('article', 'Votre article a bien été supprimé');
+    return $app->redirect($app["url_generator"]->generate("admin"));
+
 })
 ->bind('delete-article');
-
-/*-----  End of ADMIN  ------*/
+/*-----  End of admin delete article  ------*/
 
 
 

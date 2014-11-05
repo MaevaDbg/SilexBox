@@ -1,0 +1,25 @@
+{% extends "admin/_layout.html.twig" %}
+
+{% block content %}
+
+    {% for alert in app.session.flashbag.get('article') %}
+    <div class="error-message">
+      <div class="alert"><strong>{{ alert }}</strong></div>
+    </div>
+    {% endfor %}
+
+    <h2>Liste des articles du blog</h2>
+
+    <a href="{{ path('add-article') }}">Ajouter un article</a>
+    
+    <ul>
+        {% for article in articles %}
+            <li>
+            {{ article.title }} / {{ article.datePublication.date|localizeddate("short", "none", "fr") }} / {{ article.status }} / {{ article.lang }} <br/>
+            <a href="{{ path('update-article', { id: article.id }) }}">Modifier</a>
+            <a href="{{ path('delete-article', { id: article.id }) }}">Supprimer</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

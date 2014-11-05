@@ -16,91 +16,98 @@ class Article
      * @Id
      * @GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @Column(name="title", type="string", length=255)
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      *
      * @Column(name="excerpt", type="text")
      */
-    private $excerpt;
+    protected $excerpt;
 
     /**
      * @var string
      *
      * @Column(name="image", type="string", length=255)
      */
-    private $image;
+    protected $image;
 
     /**
      * @var string
      *
      * @Column(name="content", type="text")
      */
-    private $content;
+    protected $content;
 
     /**
      * @var \DateTime
      *
      * @Column(name="date_creation", type="datetime")
      */
-    private $dateCreation;
+    protected $dateCreation;
 
     /**
      * @var \DateTime
      *
      * @Column(name="date_publication", type="datetime")
      */
-    private $datePublication;
+    protected $datePublication;
 
     /**
      * @var \DateTime
      *
-     * @Column(name="date_update", type="datetime")
+     * @Column(name="date_update", type="datetime", nullable=true)
      */
-    private $dateUpdate;
+    protected $dateUpdate;
 
     /**
      * @var integer
      *
      * @Column(name="status", type="integer")
      */
-    private $status;
+    protected $status;
 
     /**
      * @var string
      *
-     * @Column(name="video", type="string", length=255)
+     * @Column(name="video", type="string", length=255, nullable=true)
      */
-    private $video;
+    protected $video;
 
     /**
      * @var boolean
      *
-     * @Column(name="home_push", type="boolean")
+     * @Column(name="home_push", type="boolean", nullable=true)
      */
-    private $homePush;
+    protected $homePush;
 
     /**
      * @var integer
      *
-     * @Column(name="home_push_order", type="integer")
+     * @Column(name="home_push_order", type="integer", nullable=true)
      */
-    private $homePushOrder;
+    protected $homePushOrder;
 
     /**
      * @var string
      *
      * @Column(name="lang", type="string", length=2)
      */
-    private $lang;
+    protected $lang;
+
+    /**
+     * Construct
+     */
+    public function __construct(){
+        $this->dateCreation = new \DateTime();
+    }
 
     /**
      * Get id
