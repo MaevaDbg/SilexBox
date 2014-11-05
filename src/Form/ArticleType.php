@@ -49,8 +49,7 @@ class ArticleType extends AbstractType
             ))
             ->add('lang', 'choice', array(
                 'choices' => array('fr' => 'Français', 'en' => 'Anglais')
-            ))
-            ->add('Envoyer', 'submit');
+            ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
