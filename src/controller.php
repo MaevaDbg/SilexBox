@@ -4,6 +4,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Form\EmailSubscriptionType;
 use Form\ArticleType;
 use Entity\Article;
+use Repository\ArticleRepository;
 
 
 /*================================
@@ -17,6 +18,33 @@ $app->get('/{_locale}', function () use ($app) {
 ->value('_locale', 'fr')
 ->bind('homepage');
 /*-----  End of homepage  ------*/
+
+
+
+/*============================
+=            BLOG            =
+============================*/
+$app->get('/{_locale}/blog', function (Request $request) use ($app) {
+
+    $em = $app['orm.em'];
+
+    $lang = $app['request']->getLocale();
+
+    if($app['debug']){
+        $env = 'dev';
+    }else{
+        $env = 'prod';
+    }
+
+    $repo = new ArticleRepository ($app);
+    $articles = $repo->findByLang($lang, $env);
+
+    return $app['twig']->render('blog.html.twig', array( 'articles' => $articles ));
+})
+->assert('_locale', 'fr|en')
+->value('_locale', 'fr')
+->bind('blog');
+/*-----  End of blog  ------*/
 
 
 
@@ -38,7 +66,6 @@ $app->match('/email-subscription', function (Request $request) use ($app) {
 })
 ->bind('email-subscription');
 /*-----  End of email subscription  ------*/
-
 
 
 
