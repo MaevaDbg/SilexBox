@@ -59,6 +59,7 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
 }));
 
 
+
 /*===================================
 =            TRANSLATION            =
 ===================================*/
@@ -79,12 +80,14 @@ $app['translator'] = $app->share($app->extend('translator', function($translator
 }));
 
 
+
 /*===============================
 =            SESSION            =
 ===============================*/
 //add Session Service
 $app->register(new SessionServiceProvider());
 $app['session']->start();
+
 
 
 /*================================
@@ -102,6 +105,7 @@ $app['security.firewalls'] = array(
 );
 
 
+
 /*=================================
 =            ERROR LOG            =
 =================================*/
@@ -109,6 +113,8 @@ $app['security.firewalls'] = array(
 $app->register(new MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/logs/silex.log',
 ));
+
+
 
 return $app;
 ?>

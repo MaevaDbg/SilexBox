@@ -19,6 +19,7 @@ $app->get('/{_locale}', function () use ($app) {
 /*-----  End of homepage  ------*/
 
 
+
 /*==========================================
 =            EMAIL SUBSCRIPTION            =
 ==========================================*/
@@ -56,6 +57,7 @@ $app->get('/admin', function (Request $request) use ($app) {
 /*-----  End of admin home  ------*/
 
 
+
 /*===========================================
 =            ADMIN - ADD ARTICLE            =
 ===========================================*/
@@ -80,6 +82,7 @@ $app->match('/admin/add-article', function (Request $request) use ($app) {
 })
 ->bind('add-article');
 /*-----  End of admin add article  ------*/
+
 
 
 /*==============================================
@@ -108,6 +111,7 @@ $app->match('/admin/update-article/{id}', function ($id, Request $request) use (
 })
 ->bind('update-article');
 /*-----  End of admin update article  ------*/
+
 
 
 /*==============================================
