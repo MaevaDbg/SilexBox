@@ -12,7 +12,18 @@ use Repository\ArticleRepository;
 ================================*/
 $app->get('/{_locale}', function () use ($app) {
 
-    return $app['twig']->render('index.html.twig');
+    $lang = $app['request']->getLocale();
+
+    if($app['debug']){
+        $env = 'dev';
+    }else{
+        $env = 'prod';
+    }
+
+    $repo = new ArticleRepository ($app);
+    $articles = $repo->findAllArticleForHome($lang, $env);
+
+    return $app['twig']->render('index.html.twig', array( 'articles' => $articles ));
 })
 ->assert('_locale', 'fr|en')
 ->value('_locale', 'fr')
@@ -26,8 +37,6 @@ $app->get('/{_locale}', function () use ($app) {
 ============================*/
 $app->get('/{_locale}/blog', function (Request $request) use ($app) {
 
-    $em = $app['orm.em'];
-
     $lang = $app['request']->getLocale();
 
     if($app['debug']){
@@ -37,7 +46,7 @@ $app->get('/{_locale}/blog', function (Request $request) use ($app) {
     }
 
     $repo = new ArticleRepository ($app);
-    $articles = $repo->findByLang($lang, $env);
+    $articles = $repo->findAllArticleForBlog($lang, $env);
 
     return $app['twig']->render('blog.html.twig', array( 'articles' => $articles ));
 })

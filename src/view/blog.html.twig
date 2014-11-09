@@ -1,7 +1,20 @@
 {% extends "_layout.html.twig" %}
 
 {% block content %}
-
-    {{ dump(articles) }}
+    
+    {% if articles is empty %}
+	   <p>Il n'y a pas encore d'articles</p>
+    {% else %}
+        <ul>
+        {% for art in articles %}
+            <li>
+                <h1>{{ art.title }}</h1>      
+                <p>{{ art.datePublication|localizeddate("medium", "short", "fr") }}</p>
+                <p>Image : {{ art.image }}</p>
+                <p>{{ art.excerpt }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
     
 {% endblock %}
