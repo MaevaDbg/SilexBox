@@ -11,8 +11,15 @@
         {% for art in articles %}
             <li>
                 <h1>{{ art.title }}</h1>      
-                <p>{{ art.datePublication|localizeddate("medium", "short", "fr") }}</p>
-                <p>Image : {{ art.image }}</p>
+                <p>{{ art.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</p>
+                
+                {% if art.image is not empty %}
+                    <img src="{{ app.request.basepath }}/img/blog/{{ art.image }}" alt="">
+                {% endif %}
+                {% if art.video is not empty %}
+                    <video src=""></video>
+                {% endif %}
+                
                 <p>{{ art.excerpt }}</p>
                 <p><a href="{{ path('article', {slug: art.slug}) }}">Lire la suite</a></p>
             </li>

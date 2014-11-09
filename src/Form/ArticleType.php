@@ -27,7 +27,7 @@ class ArticleType extends AbstractType
                 'required'=> true,
             ))
             ->add('image','text', array(
-                'required'=> true,
+                'required'=> false,
             ))
             ->add('content','textarea', array(
                 'required'=> true,

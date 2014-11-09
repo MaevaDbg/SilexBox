@@ -42,7 +42,7 @@ class Article
     /**
      * @var string
      *
-     * @Column(name="image", type="string", length=255)
+     * @Column(name="image", type="string", length=255, nullable=true)
      */
     protected $image;
 

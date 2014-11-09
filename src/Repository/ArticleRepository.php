@@ -72,7 +72,7 @@ class ArticleRepository extends EntityRepository{
             ->setParameter(1, $lang);
 
         $query = $qb->getQuery();
-        $articles = $query->getArrayResult();
+        $articles = $query->getResult();
 
         return $articles;
 
@@ -106,7 +106,7 @@ class ArticleRepository extends EntityRepository{
             ->setParameter(1, $lang);
 
         $query = $qb->getQuery();
-        $articles = $query->getArrayResult();
+        $articles = $query->getResult();
 
         return $articles;
 
