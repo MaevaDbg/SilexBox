@@ -12,12 +12,43 @@ class ArticleRepository extends EntityRepository{
         $this->db = $app['db'];
         $this->em = $app['orm.em'];
     }
+
+    /**
+     * Return an article depends on his slug
+     * @param  [string] $slug [description]
+     * @param  [string] $env  [Define environment of application]
+     * @return [type]       [description]
+     */
+    public function findBySlug($slug, $env){
+
+        $date = new \DateTime();
+
+        $qb = new QueryBuilder($this->em);
+        $qb->select('a')->from('Entity\Article', 'a');
+
+        if($env == "dev"){
+            $qb->where('a.status = 1');
+            $qb->orWhere('a.status = 2');
+        }else{
+            $qb->where('a.status = 2')
+                ->andWhere($qb->expr()->lte('a.datePublication', '?1'))
+                ->setParameter(1, $date->format('Y-m-d H:i:s'));
+        }
+
+        $qb->andWhere('a.slug = ?2')
+            ->setParameter(2, $slug);
+
+        $query = $qb->getQuery();
+        $article = $query->getSingleResult();
+
+        return $article;
+    }
     
     /**
      * Return all publicated articles for blog page in dev and prod environment
      * @param  [string] $lang [Define language of articles]
      * @param  [string] $env  [Define environment of application]
-     * @return [array]        [Return an array of Article object]
+     * @return [array]        [Return an array of Article]
      */
     public function findAllArticleForBlog($lang, $env){
 
@@ -51,7 +82,7 @@ class ArticleRepository extends EntityRepository{
      * Return all selected articles for homepage in dev and prod environment
      * @param  [string] $lang [Define language of articles]
      * @param  [string] $env  [Define environment of application]
-     * @return [array]        [Return an array of Article object]
+     * @return [array]        [Return an array of Article]
      */
     public function findAllArticleForHome($lang, $env){
 

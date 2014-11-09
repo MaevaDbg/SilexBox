@@ -57,6 +57,30 @@ $app->get('/{_locale}/blog', function (Request $request) use ($app) {
 
 
 
+/*===============================
+=            ARTICLE            =
+===============================*/
+$app->get('/{_locale}/blog/{slug}', function (Request $request, $slug) use ($app) {
+
+    if($app['debug']){
+        $env = 'dev';
+    }else{
+        $env = 'prod';
+    }
+
+    $repo = new ArticleRepository ($app);
+    $article = $repo->findBySlug($slug, $env);
+
+    return $app['twig']->render('blog-article.html.twig', array( 'article' => $article ));
+
+})
+->assert('_locale', 'fr|en')
+->value('_locale', 'fr')
+->bind('article');
+/*-----  End of ARTICLE  ------*/
+
+
+
 /*==========================================
 =            EMAIL SUBSCRIPTION            =
 ==========================================*/

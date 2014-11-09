@@ -12,6 +12,7 @@
                 <p>{{ art.datePublication|localizeddate("medium", "short", "fr") }}</p>
                 <p>Image : {{ art.image }}</p>
                 <p>{{ art.excerpt }}</p>
+                <p><a href="{{ path('article', {slug: art.slug}) }}">Lire la suite</a></p>
             </li>
         {% endfor %}
         </ul>

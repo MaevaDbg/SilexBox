@@ -20,6 +20,9 @@ class ArticleType extends AbstractType
             ->add('title','text', array(
                 'required'=> true,
             ))
+            ->add('slug','text', array(
+                'required'=> true,
+            ))
             ->add('excerpt','textarea', array(
                 'required'=> true,
             ))

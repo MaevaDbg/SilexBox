@@ -28,6 +28,13 @@ class Article
     /**
      * @var string
      *
+     * @Column(name="slug", type="string", length=255, unique=true)
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     *
      * @Column(name="excerpt", type="text")
      */
     protected $excerpt;
@@ -393,5 +400,28 @@ class Article
     public function getLang()
     {
         return $this->lang;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Article
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
