@@ -47,9 +47,6 @@ class ArticleType extends AbstractType
             ->add('homePush', 'checkbox', array(
                 'required' => false
             ))
-            ->add('homePushOrder', 'text', array(
-                'required' => false
-            ))
             ->add('lang', 'choice', array(
                 'choices' => array('fr' => 'Français', 'en' => 'Anglais')
             ));

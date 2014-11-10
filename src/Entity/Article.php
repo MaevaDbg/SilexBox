@@ -96,13 +96,6 @@ class Article
     protected $homePush;
 
     /**
-     * @var integer
-     *
-     * @Column(name="home_push_order", type="integer", nullable=true)
-     */
-    protected $homePushOrder;
-
-    /**
      * @var string
      *
      * @Column(name="lang", type="string", length=2)
@@ -354,29 +347,6 @@ class Article
     public function getHomePush()
     {
         return $this->homePush;
-    }
-
-    /**
-     * Set homePushOrder
-     *
-     * @param integer $homePushOrder
-     * @return Article
-     */
-    public function setHomePushOrder($homePushOrder)
-    {
-        $this->homePushOrder = $homePushOrder;
-
-        return $this;
-    }
-
-    /**
-     * Get homePushOrder
-     *
-     * @return integer 
-     */
-    public function getHomePushOrder()
-    {
-        return $this->homePushOrder;
     }
 
     /**
