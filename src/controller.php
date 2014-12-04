@@ -145,6 +145,36 @@ $app->match('/admin/add-article', function (Request $request) use ($app) {
 
 
 
+/*===========================================
+=            ADMIN - DUPLICATE ARTICLE            =
+===========================================*/
+$app->match('/admin/duplicate-article/{id}', function ($id, Request $request) use ($app) {
+
+    $em = $app['orm.em'];
+    $article = $em->getRepository("Entity\Article")->findOneById($id);
+    $new_article = clone $article;
+
+    $form = $app['form.factory']->create(new ArticleType($app), $new_article);
+    $form->handleRequest($request);
+
+    if ($form->isValid()) {
+        $new_article = $form->getData();
+        
+        $em->persist($new_article);
+        $em->flush();
+        $app['session']->getFlashBag()->add('article', 'Votre article a bien été ajouté');
+        
+        return $app->redirect($app["url_generator"]->generate("admin"));
+    }
+
+    return $app['twig']->render('admin/article-add.html.twig', array('form' => $form->createView()));
+    
+})
+->bind('duplicate-article');
+/*-----  End of admin add article  ------*/
+
+
+
 /*==============================================
 =            ADMIN - UPDATE ARTICLE            =
 ==============================================*/

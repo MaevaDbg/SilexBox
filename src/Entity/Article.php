@@ -89,6 +89,13 @@ class Article
     protected $video;
 
     /**
+     * @var string
+     *
+     * @Column(name="image_video", type="string", length=255, nullable=true)
+     */
+    protected $imageVideo;
+
+    /**
      * @var boolean
      *
      * @Column(name="home_push", type="boolean", nullable=true)
@@ -393,5 +400,28 @@ class Article
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set imageVideo
+     *
+     * @param string $imageVideo
+     * @return Article
+     */
+    public function setImageVideo($imageVideo)
+    {
+        $this->imageVideo = $imageVideo;
+
+        return $this;
+    }
+
+    /**
+     * Get imageVideo
+     *
+     * @return string 
+     */
+    public function getImageVideo()
+    {
+        return $this->imageVideo;
     }
 }

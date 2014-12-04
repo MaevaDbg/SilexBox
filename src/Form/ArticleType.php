@@ -35,14 +35,16 @@ class ArticleType extends AbstractType
             ->add('datePublication', 'date', array(
                 'widget' => 'choice',
                 'format' => 'dd MM yyyy',
-                'input' => 'datetime',
-                'data'  => new \DateTime()
+                'input' => 'datetime'
             ))
             ->add('status', 'choice', array(
                 'choices' => array('0' => 'Brouillon', '1' => 'Preprod', '2' => 'Prod')
             ))
             ->add('video','text', array(
                 'required' => false
+            ))
+            ->add('imageVideo','text', array(
+                'required'=> false,
             ))
             ->add('homePush', 'checkbox', array(
                 'required' => false

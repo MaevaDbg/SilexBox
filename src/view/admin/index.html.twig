@@ -45,6 +45,7 @@
                             <td>{% if article.homePush == 1 %}<span class="label label-success label-mini">Oui</span>{% endif %}</td>
                             <td>
                                 <a class="btn btn-primary btn-xs" href="{{ path('update-article', { id: article.id }) }}" title="Modifier"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-theme03 btn-xs" href="{{ path('duplicate-article', { id: article.id }) }}" title="Dupliquer"><i class="fa fa-files-o"></i></a>
                                 <a class="delete-article btn btn-danger btn-xs" href="{{ path('delete-article', { id: article.id }) }}" title="Supprimer"><i class="fa fa-trash-o "></i></a>
                             </td>
                         </tr>
