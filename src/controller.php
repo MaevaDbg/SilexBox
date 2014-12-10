@@ -109,11 +109,11 @@ $app->match('/email-subscription', function (Request $request) use ($app) {
 $app->get('/{_locale}/{page}', function ($page) use ($app){
 
     $matchPage = array(
-        'page-statique' => 'page.html.twig',
-        'static-page' => 'page.html.twig',
+        'page-statique' => array('template' => 'page.html.twig', 'trad' => 'static-page'),
+        'static-page' => array('template' => 'page.html.twig', 'trad' => 'page-statique'),
     );
 
-    return $app['twig']->render($matchPage[$page]);
+    return $app['twig']->render($matchPage[$page]['template'], array('pageTrad' => $matchPage[$page]['trad']));
 
 })
 ->assert('_locale', 'fr|en')
