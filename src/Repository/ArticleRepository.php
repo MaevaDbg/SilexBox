@@ -50,7 +50,7 @@ class ArticleRepository extends EntityRepository{
      * @param  [string] $env  [Define environment of application]
      * @return [array]        [Return an array of Article]
      */
-    public function findAllArticleForBlog($lang, $env){
+    public function findAllArticle($lang, $env){
 
         $qb = new QueryBuilder($this->em);
         $qb->select('a')->from('Entity\Article', 'a');
@@ -84,7 +84,7 @@ class ArticleRepository extends EntityRepository{
      * @param  [string] $env  [Define environment of application]
      * @return [array]        [Return an array of Article]
      */
-    public function findAllArticleForHome($lang, $env){
+    public function findPushedArticle($lang, $env){
 
         $qb = new QueryBuilder($this->em);
         $qb->select('a')->from('Entity\Article', 'a');

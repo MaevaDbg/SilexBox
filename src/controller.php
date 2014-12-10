@@ -21,7 +21,7 @@ $app->get('/{_locale}', function () use ($app) {
     }
 
     $repo = new ArticleRepository ($app);
-    $articles = $repo->findAllArticleForHome($lang, $env);
+    $articles = $repo->findPushedArticle($lang, $env);
 
     return $app['twig']->render('index.html.twig', array( 'articles' => $articles ));
 })
@@ -46,7 +46,7 @@ $app->get('/{_locale}/blog', function (Request $request) use ($app) {
     }
 
     $repo = new ArticleRepository ($app);
-    $articles = $repo->findAllArticleForBlog($lang, $env);
+    $articles = $repo->findAllArticle($lang, $env);
 
     return $app['twig']->render('blog.html.twig', array( 'articles' => $articles ));
 })
@@ -137,7 +137,7 @@ $app->match('/admin/add-article', function (Request $request) use ($app) {
         return $app->redirect($app["url_generator"]->generate("admin"));
     }
 
-    return $app['twig']->render('admin/article-add.html.twig', array('form' => $form->createView()));
+    return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Ajouter un article'));
     
 })
 ->bind('add-article');
@@ -167,7 +167,7 @@ $app->match('/admin/duplicate-article/{id}', function ($id, Request $request) us
         return $app->redirect($app["url_generator"]->generate("admin"));
     }
 
-    return $app['twig']->render('admin/article-add.html.twig', array('form' => $form->createView()));
+    return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Dupliquer un article'));
     
 })
 ->bind('duplicate-article');
@@ -196,7 +196,7 @@ $app->match('/admin/update-article/{id}', function ($id, Request $request) use (
         return $app->redirect($app["url_generator"]->generate("admin"));
     }
 
-    return $app['twig']->render('admin/article-update.html.twig', array('form' => $form->createView()));
+    return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Modifier un article'));
 
 })
 ->bind('update-article');

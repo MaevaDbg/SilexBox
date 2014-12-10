@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>ADMIN - David Bowie is</title>
+        <title>ADMIN</title>
 
         <!-- Bootstrap core CSS -->
         <link href="{{ app.request.basepath }}/admin-assets/css/bootstrap.css" rel="stylesheet">
@@ -41,7 +41,7 @@
                     <!-- sidebar menu start-->
                     <ul class="sidebar-menu" id="nav-accordion">
                         <br/>
-                        <h5 class="centered"><i class="fa fa-bolt fa-2x"></i>&nbsp;&nbsp;<b>David Bowie is</b>&nbsp;&nbsp;<i class="fa fa-bolt fa-2x"></i></h5>
+                        <h5 class="centered"><a href="{{ path('homepage') }}">Titre du site</a></h5>
 
                         <li class="mt">
                             <a href="{{ path('admin') }}">
@@ -93,18 +93,8 @@
         <!--script for this page-->
         <script src="{{ app.request.basepath }}/admin-assets/js/sparkline-chart.js"></script>    
         <script src="{{ app.request.basepath }}/admin-assets/js/zabuto_calendar.js"></script>
-
-        <script>
-            $(function(){
-                $('.delete-article').click(function(){
-                    if(confirm("Etes-vous sûr de vouloir supprimer cet article?")){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                });
-            });
-        </script>
+        
+        {% block javascript %}{% endblock %}
         
     </body>
 

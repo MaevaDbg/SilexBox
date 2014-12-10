@@ -35,7 +35,8 @@ class ArticleType extends AbstractType
             ->add('datePublication', 'date', array(
                 'widget' => 'choice',
                 'format' => 'dd MM yyyy',
-                'input' => 'datetime'
+                'input' => 'datetime',
+                'data' => isset($options['data']) ? $options['data']->getDatePublication() : new \DateTime()
             ))
             ->add('status', 'choice', array(
                 'choices' => array('0' => 'Brouillon', '1' => 'Preprod', '2' => 'Prod')
