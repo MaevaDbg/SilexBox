@@ -103,6 +103,26 @@ $app->match('/email-subscription', function (Request $request) use ($app) {
 
 
 
+/*===================================
+=            PAGE STATIC            =
+===================================*/
+$app->get('/{_locale}/{page}', function ($page) use ($app){
+
+    $matchPage = array(
+        'page-statique' => 'page.html.twig',
+        'static-page' => 'page.html.twig',
+    );
+
+    return $app['twig']->render($matchPage[$page]);
+
+})
+->assert('_locale', 'fr|en')
+->value('_locale', 'fr')
+->bind('page');
+/*-----  End of PAGE STATIC  ------*/
+
+
+
 /*==================================
 =            ADMIN HOME            =
 ==================================*/

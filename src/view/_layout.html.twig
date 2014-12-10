@@ -26,6 +26,15 @@
         <header>
             <h1>{% trans %}titre{% endtrans %}</h1>
 
+            <nav>
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                    <li><a href="{{ path('blog') }}">Blog</a></li>
+                    <li><a href="{{ path('page', {'page': app.translator.trans('nav-page')}) }}">Page</a></li>
+                    <li><a href="{{ path('email-subscription') }}">Inscription</a></li>
+                </ul>
+            </nav>
+
             {% if app.request.locale == "fr" %}
                 <a href="{{ path('homepage', {'_locale': 'en'}) }}" title="English version">English version</a>
             {% else %}
