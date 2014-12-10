@@ -25,16 +25,28 @@
         {# HEADER #}
         <header>
             <h1>{% trans %}titre{% endtrans %}</h1>
-
+            
+            {# MENU #}
+            {% set route = app.request.attributes.get('_route') %}
+            {% set page = app.request.attributes.get('page') %}
             <nav>
                 <ul>
-                    <li><a href="{{ path('homepage') }}">Accueil</a></li>
-                    <li><a href="{{ path('blog') }}">Blog</a></li>
-                    <li><a href="{{ path('page', {'page': app.translator.trans('nav-page')}) }}">Page</a></li>
-                    <li><a href="{{ path('email-subscription') }}">Inscription</a></li>
+                    <li>
+                        <a href="{{ path('homepage') }}" class="{% if route == 'homepage' %}selected{% endif %}">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('blog') }}" class="{% if route == 'blog' %}selected{% endif %}">Blog</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('page', {'page': app.translator.trans('nav-page')}) }}" class="{% if page == app.translator.trans('nav-page') %}selected{% endif %}">Page</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('email-subscription') }}" class="{% if route == 'email-subscription' %}selected{% endif %}">Inscription</a>
+                    </li>
                 </ul>
             </nav>
-
+            
+            {# SWITCH LANG #}
             {% if app.request.locale == "fr" %}
                 <a href="{{ path('homepage', {'_locale': 'en'}) }}" title="English version">English version</a>
             {% else %}
