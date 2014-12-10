@@ -107,7 +107,12 @@ class ArticleRepository extends EntityRepository{
             ->setMaxResults(1);
 
         $query = $qb->getQuery();
-        $articles = $query->getSingleResult();
+        try {
+            $articles = $query->getSingleResult();
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $articles = null;
+        }
+        
 
         return $articles;
 
