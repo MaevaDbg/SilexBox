@@ -21,9 +21,10 @@ $app->get('/{_locale}', function () use ($app) {
     }
 
     $repo = new ArticleRepository ($app);
-    $articles = $repo->findPushedArticle($lang, $env);
+    $pushedArticle = $repo->findPushedArticle($lang, $env);
+    $lastArticles = $repo->findLastArticle($lang, $env);
 
-    return $app['twig']->render('index.html.twig', array( 'articles' => $articles ));
+    return $app['twig']->render('index.html.twig', array( 'pushedArticle' => $pushedArticle, 'lastArticles' => $lastArticles ));
 })
 ->assert('_locale', 'fr|en')
 ->value('_locale', 'fr')

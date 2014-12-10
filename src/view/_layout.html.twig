@@ -1,9 +1,43 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>{% block title '' %} - My Silex Application</title>
-    </head>
-    <body>
-        {% block content %}{% endblock %}
+<html lang="{{ app.request.locale }}">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    {# META FACEBOOK #}
+    {% block metafacebook %}
+    {% endblock %}
+
+    <title>{% block title '' %} - Philharmonie de Paris</title>
+    <meta name="description" content="{% block description '' %}">
+    <meta name="author" content="Philharmonie de Paris" />
+
+    <link rel="icon" type="image/png" href="" />
+
+</head>
+
+    <body id="{% block bodyId '' %}">
+
+        {# HEADER #}
+        <header>
+            <h1>{% trans %}titre{% endtrans %}</h1>
+
+            {% if app.request.locale == "fr" %}
+                <a href="{{ path('homepage', {'_locale': 'en'}) }}" title="English version">English version</a>
+            {% else %}
+                <a href="{{ path('homepage', {'_locale': 'fr'}) }}" title="Version française">Version française</a>
+            {% endif %}
+        </header>
+
+        {# MAIN #}
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
     </body>
 </html>

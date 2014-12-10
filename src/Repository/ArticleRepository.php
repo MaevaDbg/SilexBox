@@ -45,7 +45,7 @@ class ArticleRepository extends EntityRepository{
     }
     
     /**
-     * Return all publicated articles for blog page in dev and prod environment
+     * Return all publicated articles for blog page in dev or prod environment
      * @param  [string] $lang [Define language of articles]
      * @param  [string] $env  [Define environment of application]
      * @return [array]        [Return an array of Article]
@@ -79,7 +79,7 @@ class ArticleRepository extends EntityRepository{
     }
 
     /**
-     * Return all selected articles for homepage in dev and prod environment
+     * Return all pushed articles for homepage in dev or prod environment
      * @param  [string] $lang [Define language of articles]
      * @param  [string] $env  [Define environment of application]
      * @return [array]        [Return an array of Article]
@@ -103,7 +103,43 @@ class ArticleRepository extends EntityRepository{
         $qb->andWhere('a.lang = ?1')
             ->andWhere('a.homePush = true')
             ->orderBy('a.datePublication', 'DESC')
-            ->setParameter(1, $lang);
+            ->setParameter(1, $lang)
+            ->setMaxResults(1);
+
+        $query = $qb->getQuery();
+        $articles = $query->getSingleResult();
+
+        return $articles;
+
+    }
+
+    /**
+     * Return last articles in dev or prod environment
+     * @param  [string] $lang [Define language of articles]
+     * @param  [string] $env  [Define environment of application]
+     * @return [array]        [Return an array of Article]
+     */
+    public function findLastArticle($lang, $env){
+
+        $qb = new QueryBuilder($this->em);
+        $qb->select('a')->from('Entity\Article', 'a');
+
+        //Si on est en dev je récupère les articles prod et preprod
+        if($env == "dev"){
+            $qb->andWhere('a.status = 1');
+            $qb->orWhere('a.status = 2');
+        }else{
+            $date = new \DateTime();
+            $qb->andWhere('a.status = 2')
+                ->andWhere($qb->expr()->lte('a.datePublication', '?2'))
+                ->setParameter(2, $date->format('Y-m-d H:i:s'));
+        }
+
+        $qb->andWhere('a.lang = ?1')
+            ->andWhere('a.homePush <> true')
+            ->orderBy('a.datePublication', 'DESC')
+            ->setParameter(1, $lang)
+            ->setMaxResults(2);
 
         $query = $qb->getQuery();
         $articles = $query->getResult();

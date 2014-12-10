@@ -2,20 +2,41 @@
 
 {% block content %}
     
+    {# ALL ARTICLES #}
     {% if articles is empty %}
 	   <p>Il n'y a pas encore d'articles</p>
     {% else %}
-        <ul>
+
         {% for art in articles %}
-            <li>
-                <h1>{{ art.title }}</h1>      
-                <p>{{ art.datePublication|localizeddate("medium", "short", "fr") }}</p>
-                <p>Image : {{ art.image }}</p>
-                <p>{{ art.excerpt }}</p>
-                <p><a href="{{ path('article', {slug: art.slug}) }}">Lire la suite</a></p>
-            </li>
+            <article>
+
+                <header>
+                    <h1><a href="{{ path('article', {slug: art.slug}) }}">{{ art.title|raw }}</a></h1>      
+                    <time datetime="{{ art.datePublication|localizeddate }}">{{ art.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</time>
+                </header>
+                
+                <figure>
+                    {% if art.image is not empty %}
+                        <a href="{{ path('article', {slug: art.slug}) }}"><img src="{{ app.request.basepath }}/img/blog/{{ art.image }}" alt=""></a>
+                    {% endif %}
+                    {% if art.video is not empty %}
+                        <video poster="{{ app.request.basepath }}/img/blog/{{ art.imageVideo }}" controls>
+                            <source src="{{ app.request.basepath }}/docs/{{ art.video }}.mp4" type="video/mp4 " />
+                            <source src="{{ app.request.basepath }}/docs/{{ art.video }}.ogv" type="video/ogg " />
+                            <source src="{{ app.request.basepath }}/docs/{{ art.video }}.webm" type="video/webm " />
+                            Désolée, votre navigateur ne lit pas les vidéos HTML5
+                        </video>
+                    {% endif %}
+                </figure>
+                
+                <section>
+                    {{ art.excerpt|raw }}
+                    <p><a href="{{ path('article', {slug: art.slug}) }}">Lire la suite</a></p>
+                </section>
+            
+            </article>
         {% endfor %}
-        </ul>
+
     {% endif %}
     
 {% endblock %}

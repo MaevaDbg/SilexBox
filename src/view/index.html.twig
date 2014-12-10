@@ -1,30 +1,89 @@
 {% extends "_layout.html.twig" %}
+{% block title 'Accueil' %}
+{% block description 'Accueil description' %}
+{% block bodyId 'home' %}
 
 {% block content %}
-    
-    {% trans %}titre{% endtrans %}
 
-    {% if articles is empty %}
-	   <p>Il n'y a pas encore d'articles mis en avant sur la home</p>
-    {% else %}
-        <ul>
-        {% for art in articles %}
-            <li>
-                <h1>{{ art.title }}</h1>      
-                <p>{{ art.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</p>
+    {# PUSHED ARTICLE #}
+    <section>
+        <h1>Article mis en avant</h1>
+
+        {% if pushedArticle is empty %}
+    	   <p>Il n'y a pas encore d'article mis en avant sur la home</p>
+        {% else %}
+            <article>
+
+                <header>
+                    <h1><a href="{{ path('article', {slug: pushedArticle.slug}) }}">{{ pushedArticle.title|raw }}</a></h1>      
+                    <time datetime="{{ pushedArticle.datePublication|localizeddate }}">{{ pushedArticle.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</time>
+                </header>
+
+                <figure>
+                    {% if pushedArticle.image is not empty %}
+                        <a href="{{ path('article', {slug: pushedArticle.slug}) }}"><img src="{{ app.request.basepath }}/img/blog/{{ pushedArticle.image }}" alt=""></a>
+                    {% endif %}
+                    {% if pushedArticle.video is not empty %}
+                        <video poster="{{ app.request.basepath }}/img/blog/{{ pushedArticle.imageVideo }}" controls>
+                            <source src="{{ app.request.basepath }}/docs/{{ pushedArticle.video }}.mp4" type="video/mp4 " />
+                            <source src="{{ app.request.basepath }}/docs/{{ pushedArticle.video }}.ogv" type="video/ogg " />
+                            <source src="{{ app.request.basepath }}/docs/{{ pushedArticle.video }}.webm" type="video/webm " />
+                            Désolée, votre navigateur ne lit pas les vidéos HTML5
+                        </video>
+                    {% endif %}
+                </figure>
                 
-                {% if art.image is not empty %}
-                    <img src="{{ app.request.basepath }}/img/blog/{{ art.image }}" alt="">
-                {% endif %}
-                {% if art.video is not empty %}
-                    <video src=""></video>
-                {% endif %}
+                <section>
+                    {{ pushedArticle.excerpt|raw }}
+                    <p><a href="{{ path('article', {slug: pushedArticle.slug}) }}">Lire la suite</a></p>
+                </section>
+
+            </article>
+        {% endif %}
+
+    </section>
+
+    {# LAST ARTICLES #}
+    <section>
+        <h1>Derniers articles du blog</h1>
+
+        {% if lastArticles is empty %}
+           <p>Il n'y a pas encore d'articles dans le blog</p>
+        {% else %}
+            {% for art in lastArticles %}
+                <article>
+
+                    <header>
+                        <h1><a href="{{ path('article', {slug: art.slug}) }}">{{ art.title|raw }}</a></h1>      
+                        <time datetime="{{ art.datePublication|localizeddate }}">{{ art.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</time>
+                    </header>
+                    
+                    <figure>
+                        {% if art.image is not empty %}
+                            <a href="{{ path('article', {slug: art.slug}) }}"><img src="{{ app.request.basepath }}/img/blog/{{ art.image }}" alt=""></a>
+                        {% endif %}
+                        {% if art.video is not empty %}
+                            <video poster="{{ app.request.basepath }}/img/blog/{{ art.imageVideo }}" controls>
+                                <source src="{{ app.request.basepath }}/docs/{{ art.video }}.mp4" type="video/mp4 " />
+                                <source src="{{ app.request.basepath }}/docs/{{ art.video }}.ogv" type="video/ogg " />
+                                <source src="{{ app.request.basepath }}/docs/{{ art.video }}.webm" type="video/webm " />
+                                Désolée, votre navigateur ne lit pas les vidéos HTML5
+                            </video>
+                        {% endif %}
+                    </figure>
+                    
+                    <section>
+                        {{ art.excerpt|raw }}
+                        <p><a href="{{ path('article', {slug: art.slug}) }}">Lire la suite</a></p>
+                    </section>
                 
-                <p>{{ art.excerpt }}</p>
-                <p><a href="{{ path('article', {slug: art.slug}) }}">Lire la suite</a></p>
-            </li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+                </article>
+            {% endfor %}
+
+            <p><a href="{{ path('blog') }}">Tous les articles</a></p>
+
+        {% endif %}
+
+    </section>
 
 {% endblock %}

@@ -2,10 +2,31 @@
 
 {% block content %}
 
-    <h1>{{ article.title }}</h1>
-    <h2>{{ article.excerpt }}</h2>
-    <p>Image : {{ article.image }}</p>
-    <p>{{ article.content|raw }}</p>
-    <p>{{ article.datePublication|localizeddate("medium", "short", "fr") }}</p>
+    <article>
+
+        <header>
+            <h1>{{ article.title|raw }}</h1>      
+            <time datetime="{{ article.datePublication|localizeddate }}">{{ article.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</time>
+        </header>
+        
+        <figure>
+            {% if article.image is not empty %}
+                <img src="{{ app.request.basepath }}/img/blog/{{ article.image }}" alt="">
+            {% endif %}
+            {% if article.video is not empty %}
+                <video poster="{{ app.request.basepath }}/img/blog/{{ article.imageVideo }}" controls>
+                    <source src="{{ app.request.basepath }}/docs/{{ article.video }}.mp4" type="video/mp4 " />
+                    <source src="{{ app.request.basepath }}/docs/{{ article.video }}.ogv" type="video/ogg " />
+                    <source src="{{ app.request.basepath }}/docs/{{ article.video }}.webm" type="video/webm " />
+                    Désolée, votre navigateur ne lit pas les vidéos HTML5
+                </video>
+            {% endif %}
+        </figure>
+        
+        <section>
+            {{ article.content|raw }}
+        </section>
+    
+    </article>
 
 {% endblock %}
