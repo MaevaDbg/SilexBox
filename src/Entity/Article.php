@@ -96,6 +96,13 @@ class Article
     protected $imageVideo;
 
     /**
+     * @var string
+     *
+     * @Column(name="lien_youtube", type="string", length=255, nullable=true)
+     */
+    protected $lienYoutube;
+
+    /**
      * @var boolean
      *
      * @Column(name="home_push", type="boolean", nullable=true)
@@ -423,5 +430,28 @@ class Article
     public function getImageVideo()
     {
         return $this->imageVideo;
+    }
+
+    /**
+     * Set lienYoutube
+     *
+     * @param string $lienYoutube
+     * @return Article
+     */
+    public function setLienYoutube($lienYoutube)
+    {
+        $this->lienYoutube = $lienYoutube;
+
+        return $this;
+    }
+
+    /**
+     * Get lienYoutube
+     *
+     * @return string 
+     */
+    public function getLienYoutube()
+    {
+        return $this->lienYoutube;
     }
 }

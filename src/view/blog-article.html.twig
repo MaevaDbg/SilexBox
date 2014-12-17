@@ -24,6 +24,11 @@
                     Désolée, votre navigateur ne lit pas les vidéos HTML5
                 </video>
             {% endif %}
+            {% if article.lienYoutube is not empty %}
+                <div class="youtube-video">
+                    <iframe width="640" height="360" src="//{{ article.lienyoutube }}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            {% endif %}
         </figure>
         
         <section>

@@ -47,6 +47,9 @@ class ArticleType extends AbstractType
             ->add('imageVideo','text', array(
                 'required'=> false,
             ))
+            ->add('lienYoutube','text', array(
+                'required' => false
+            ))
             ->add('homePush', 'checkbox', array(
                 'required' => false
             ))

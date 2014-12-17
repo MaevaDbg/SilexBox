@@ -31,6 +31,11 @@
                             Désolée, votre navigateur ne lit pas les vidéos HTML5
                         </video>
                     {% endif %}
+                    {% if pushedArticle.lienYoutube is not empty %}
+                        <div class="youtube-video">
+                            <iframe width="640" height="360" src="//{{ pushedArticle.lienyoutube }}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    {% endif %}
                 </figure>
                 
                 <section>
@@ -69,6 +74,11 @@
                                 <source src="{{ app.request.basepath }}/docs/{{ art.video }}.webm" type="video/webm " />
                                 Désolée, votre navigateur ne lit pas les vidéos HTML5
                             </video>
+                        {% endif %}
+                        {% if art.lienYoutube is not empty %}
+                            <div class="youtube-video">
+                                <iframe width="640" height="360" src="//{{ art.lienyoutube }}" frameborder="0" allowfullscreen></iframe>
+                            </div>
                         {% endif %}
                     </figure>
                     
