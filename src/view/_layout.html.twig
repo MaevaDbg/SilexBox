@@ -51,13 +51,13 @@
                 {% if page is not empty %}
                     <a href="{{ path('page', {'_locale': 'en', 'page': pageTrad}) }}" title="English version">English version</a>
                 {% else %}
-                    <a href="{{ path(route, {'_locale': 'en'}) }}" title="English version">English version</a>
+                    <a href="{{ path('homepage', {'_locale': 'en'}) }}" title="English version">English version</a>
                 {% endif %}
             {% else %}
                 {% if page is not empty %}
                     <a href="{{ path('page', {'_locale': 'fr', 'page': pageTrad}) }}" title="Version française">Version française</a>
                 {% else %}
-                    <a href="{{ path(route, {'_locale': 'fr'}) }}" title="Version française">Version française</a>
+                    <a href="{{ path('homepage', {'_locale': 'fr'}) }}" title="Version française">Version française</a>
                 {% endif %}
             {% endif %}
         </header>
