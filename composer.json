@@ -1,20 +1,20 @@
 {
     "require": {
-        "silex/silex": "~1.1",
+        "silex/silex": "~1.2",
         "silex/web-profiler": "~1.0",
-        "doctrine/dbal": "2.4.*",
-        "monolog/monolog": ">=1.0.0",
-        "twig/twig": ">=1.8,<2.0-dev",
-        "twig/extensions": "1.1.*@dev",
-        "symfony/twig-bridge": "2.5.*@dev",
-        "symfony/form": "~2.3",
-        "symfony/validator": "~2.3",
-        "symfony/config": "~2.3",
-        "symfony/translation": "~2.3",
-        "symfony/yaml": "2.6.*@dev",
-        "symfony/doctrine-bridge": "2.6.*@dev",
-        "dflydev/doctrine-orm-service-provider": "1.0.*@dev",
-        "symfony/security": "~2.3"
+        "doctrine/dbal": "~2.4",
+        "monolog/monolog": "~1.13.1",
+        "twig/twig": "~1.18",
+        "twig/extensions": "~1.2",
+        "symfony/twig-bridge": "~2.6",
+        "symfony/form": "~2.6",
+        "symfony/validator": "~2.6",
+        "symfony/config": "~2.6",
+        "symfony/translation": "~2.6",
+        "symfony/yaml": "~2.6",
+        "symfony/doctrine-bridge": "~2.6",
+        "dflydev/doctrine-orm-service-provider": "~1.0",
+        "symfony/security": "~2.6"
     },
     "autoload": {
         "psr-0": {
