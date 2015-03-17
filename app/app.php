@@ -13,7 +13,7 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
-use Silex\Provider\SecurityServiceProvider;
+//use Silex\Provider\SecurityServiceProvider;
 
 $app = new Application();
 
@@ -21,7 +21,7 @@ $app->register(new ServiceControllerServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
-$app->register(new SecurityServiceProvider());
+//$app->register(new SecurityServiceProvider());
 
 
 
@@ -93,7 +93,7 @@ $app['session']->start();
 /*================================
 =            SECURITY            =
 ================================*/
-$app['security.firewalls'] = array(
+/*$app['security.firewalls'] = array(
     'admin' => array(
         'pattern' => '^/admin',
         'http' => true,
@@ -102,7 +102,7 @@ $app['security.firewalls'] = array(
             'admin' => array('ROLE_ADMIN', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='),
         ),
     ),
-);
+);*/
 
 
 

@@ -1,6 +1,7 @@
 <?php
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Form\EmailSubscriptionType;
 use Form\ArticleType;
 use Entity\Article;
@@ -123,124 +124,145 @@ $app->get('/{_locale}/{page}', function ($page) use ($app){
 
 
 
-/*==================================
-=            ADMIN HOME            =
-==================================*/
-$app->get('/admin', function (Request $request) use ($app) {
-
-    $em = $app['orm.em'];
-    $articles = $em->getRepository("Entity\Article")->findAll();
-
-    return $app['twig']->render('admin/index.html.twig', array('articles' => $articles));
-
-})
-->bind('admin');
-/*-----  End of admin home  ------*/
+/*=============================
+=            ADMIN            =
+=============================*/
 
 
+/**
+ * Affichage de la partie admin que si on est en local ou sur le port 8080 du serveur
+ */
+$beforeAdmin = function (Request $request) use ($app){
+    $nameServer = $request->server->get('SERVER_NAME');
+    $port = $request->server->get('SERVER_PORT');
 
-/*===========================================
-=            ADMIN - ADD ARTICLE            =
-===========================================*/
-$app->match('/admin/add-article', function (Request $request) use ($app) {
+    if( $nameServer == 'localhost' || $port == '8080'){
+        return null;
+    }else{
+        return $app->redirect($app["url_generator"]->generate("homepage"));
+    }
+};
 
-    $form = $app['form.factory']->create(new ArticleType($app));
-    $form->handleRequest($request);
 
-    if ($form->isValid()) {
-        $article = $form->getData();
+    /*============================
+    =            HOME            =
+    ============================*/
+    $app->get('/admin', function (Request $request) use ($app) {
+
         $em = $app['orm.em'];
+        $articles = $em->getRepository("Entity\Article")->findAll();
 
-        $em->persist($article);
-        $em->flush();
-        $app['session']->getFlashBag()->add('article', 'Votre article a bien été ajouté');
+        return $app['twig']->render('admin/index.html.twig', array('articles' => $articles));
+
+    })
+    ->before($beforeAdmin)
+    ->bind('admin');
+
+    /*-----  End of home  ------*/
+
+
+
+    /*===========================================
+    =            ADMIN - ADD ARTICLE            =
+    ===========================================*/
+    $app->match('/admin/add-article', function (Request $request) use ($app) {
+
+        $form = $app['form.factory']->create(new ArticleType($app));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $article = $form->getData();
+            $em = $app['orm.em'];
+
+            $em->persist($article);
+            $em->flush();
+            $app['session']->getFlashBag()->add('article', 'Votre article a bien été ajouté');
+            
+            return $app->redirect($app["url_generator"]->generate("admin"));
+        }
+
+        return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Ajouter un article'));
         
-        return $app->redirect($app["url_generator"]->generate("admin"));
-    }
-
-    return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Ajouter un article'));
-    
-})
-->bind('add-article');
-/*-----  End of admin add article  ------*/
+    })
+    ->bind('add-article');
+    /*-----  End of admin add article  ------*/
 
 
 
-/*===========================================
-=            ADMIN - DUPLICATE ARTICLE            =
-===========================================*/
-$app->match('/admin/duplicate-article/{id}', function ($id, Request $request) use ($app) {
+    /*===========================================
+    =            ADMIN - DUPLICATE ARTICLE            =
+    ===========================================*/
+    $app->match('/admin/duplicate-article/{id}', function ($id, Request $request) use ($app) {
 
-    $em = $app['orm.em'];
-    $article = $em->getRepository("Entity\Article")->findOneById($id);
-    $new_article = clone $article;
+        $em = $app['orm.em'];
+        $article = $em->getRepository("Entity\Article")->findOneById($id);
+        $new_article = clone $article;
 
-    $form = $app['form.factory']->create(new ArticleType($app), $new_article);
-    $form->handleRequest($request);
+        $form = $app['form.factory']->create(new ArticleType($app), $new_article);
+        $form->handleRequest($request);
 
-    if ($form->isValid()) {
-        $new_article = $form->getData();
+        if ($form->isValid()) {
+            $new_article = $form->getData();
+            
+            $em->persist($new_article);
+            $em->flush();
+            $app['session']->getFlashBag()->add('article', 'Votre article a bien été ajouté');
+            
+            return $app->redirect($app["url_generator"]->generate("admin"));
+        }
+
+        return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Dupliquer un article'));
         
-        $em->persist($new_article);
-        $em->flush();
-        $app['session']->getFlashBag()->add('article', 'Votre article a bien été ajouté');
+    })
+    ->bind('duplicate-article');
+    /*-----  End of admin add article  ------*/
+
+
+
+    /*==============================================
+    =            ADMIN - UPDATE ARTICLE            =
+    ==============================================*/
+    $app->match('/admin/update-article/{id}', function ($id, Request $request) use ($app) {
+
+        $em = $app['orm.em'];
+        $article = $em->getRepository("Entity\Article")->findOneById($id);
         
-        return $app->redirect($app["url_generator"]->generate("admin"));
-    }
+        $form = $app['form.factory']->create(new ArticleType($app), $article);
+        $form->handleRequest($request);
 
-    return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Dupliquer un article'));
-    
-})
-->bind('duplicate-article');
-/*-----  End of admin add article  ------*/
+        if ($form->isValid()) {
+            $article = $form->getData();
+
+            $em->persist($article);
+            $em->flush();
+            $app['session']->getFlashBag()->add('article', 'Votre article a bien été modifié');
+
+            return $app->redirect($app["url_generator"]->generate("admin"));
+        }
+
+        return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Modifier un article'));
+
+    })
+    ->bind('update-article');
+    /*-----  End of admin update article  ------*/
 
 
 
-/*==============================================
-=            ADMIN - UPDATE ARTICLE            =
-==============================================*/
-$app->match('/admin/update-article/{id}', function ($id, Request $request) use ($app) {
+    /*==============================================
+    =            ADMIN - DELETE ARTICLE            =
+    ==============================================*/
+    $app->get('/admin/delete-article/{id}', function ($id, Request $request) use ($app) {
 
-    $em = $app['orm.em'];
-    $article = $em->getRepository("Entity\Article")->findOneById($id);
-    
-    $form = $app['form.factory']->create(new ArticleType($app), $article);
-    $form->handleRequest($request);
-
-    if ($form->isValid()) {
-        $article = $form->getData();
-
-        $em->persist($article);
+        $em = $app['orm.em'];
+        $article = $em->getRepository("Entity\Article")->findOneById($id);
+        $em->remove($article);
         $em->flush();
-        $app['session']->getFlashBag()->add('article', 'Votre article a bien été modifié');
-
+        $app['session']->getFlashBag()->add('article', 'Votre article a bien été supprimé');
         return $app->redirect($app["url_generator"]->generate("admin"));
-    }
 
-    return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Modifier un article'));
-
-})
-->bind('update-article');
-/*-----  End of admin update article  ------*/
-
-
-
-/*==============================================
-=            ADMIN - DELETE ARTICLE            =
-==============================================*/
-$app->get('/admin/delete-article/{id}', function ($id, Request $request) use ($app) {
-
-    $em = $app['orm.em'];
-    $article = $em->getRepository("Entity\Article")->findOneById($id);
-    $em->remove($article);
-    $em->flush();
-    $app['session']->getFlashBag()->add('article', 'Votre article a bien été supprimé');
-    return $app->redirect($app["url_generator"]->generate("admin"));
-
-})
-->bind('delete-article');
-/*-----  End of admin delete article  ------*/
-
+    })
+    ->bind('delete-article');
+    /*-----  End of admin delete article  ------*/
 
 
 
