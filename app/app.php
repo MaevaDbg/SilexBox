@@ -21,6 +21,8 @@ $app->register(new ServiceControllerServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
+//Fix bug profiler https://github.com/silexphp/Silex-WebProfiler/issues/67
+$app->register(new Silex\Provider\HttpFragmentServiceProvider());
 //$app->register(new SecurityServiceProvider());
 
 
