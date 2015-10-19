@@ -24,6 +24,24 @@ $app->register(new ValidatorServiceProvider());
 //$app->register(new SecurityServiceProvider());
 
 
+/*======================================
+=            GESTION ASSETS            =
+======================================*/
+/*$app['asset_path'] = $app->share(function () {
+
+    $nameServer = $_SERVER['SERVER_NAME'];
+    $portServer = $_SERVER['SERVER_PORT'];
+
+    if( $nameServer == 'localhost'){
+        return 'localhost/mondossier/';
+    }else if($portServer == "portDeTest"){
+        return 'http://ServerEval/';
+    }else{
+        return 'http://ServerProd/';
+    }
+
+});*/
+
 
 /*====================================
 =            DOCTRINE ORM            =
@@ -71,11 +89,11 @@ $app->register(new TranslationServiceProvider(), array(
 //define YAML-based language files
 $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
     $translator->addLoader('yaml', new YamlFileLoader());
- 
+
     // Ajout des fichiers de ressources de langue
     $translator->addResource('yaml', __DIR__.'/../src/Locales/en.yml', 'en');
     $translator->addResource('yaml', __DIR__.'/../src/Locales/fr.yml', 'fr');
- 
+
     return $translator;
 }));
 

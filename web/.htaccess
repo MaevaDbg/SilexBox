@@ -1,8 +1,69 @@
+DefaultLanguage "fr"
+
+# ----------------------------------------------------------------------
+# CORS-enabled images (@crossorigin)
+# ----------------------------------------------------------------------
+# Send CORS headers if browsers request them; enabled by default for images.
+# developer.mozilla.org/en/CORS_Enabled_Image
+# blog.chromium.org/2011/07/using-cross-domain-images-in-webgl-and.html
+# hacks.mozilla.org/2011/11/using-cors-to-load-webgl-textures-from-cross-domain-images/
+# wiki.mozilla.org/Security/Reviews/crossoriginAttribute
+<IfModule mod_setenvif.c>
+  <IfModule mod_headers.c>
+    # mod_headers, y u no match by Content-Type?!
+    <FilesMatch "\.(gif|png|jpe?g|svg|svgz|ico|webp)$">
+      SetEnvIf Origin ":" IS_CORS
+      Header set Access-Control-Allow-Origin "*" env=IS_CORS
+    </FilesMatch>
+  </IfModule>
+</IfModule>
+
+# ----------------------------------------------------------------------
+# Webfont access
+# ----------------------------------------------------------------------
+# Allow access from all domains for webfonts.
+# Alternatively you could only whitelist your
+# subdomains like "subdomain.example.com".
+<IfModule mod_headers.c>
+  <FilesMatch "\.(ttf|ttc|otf|eot|woff?|styles.css|css)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+</IfModule>
+
+# ----------------------------------------------------------------------
+# Redirection
+# ----------------------------------------------------------------------
+# <IfModule mod_rewrite.c>
+#     Options -MultiViews
+#     RewriteEngine On
+#     RewriteBase /Silex/web
+#     RewriteCond %{REQUEST_FILENAME} !-f
+#     RewriteCond %{REQUEST_FILENAME} !-d
+#     RewriteRule ^ index.php [L]
+# </IfModule>
 <IfModule mod_rewrite.c>
     Options -MultiViews
+
     RewriteEngine On
-    RewriteBase /Silex/web
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^ index.php [L]
+    RewriteRule ^ index.php [QSA,L]
 </IfModule>
+
+# ----------------------------------------------------------------------
+# Cache serveur
+# ----------------------------------------------------------------------
+<FilesMatch "\.(gif|jpg|jpeg|png|ico|ttf|eot|woff)$">
+    Header unset Cookie
+    Header unset Set-Cookie
+
+    Header set Cache-Control "max-age=31536000"
+
+    Header set vary  "Accept-Encoding"
+    Header append vary "User-Agent"
+    Header append Cache-Control "public"
+
+    Header append Connection "Keep-Alive"
+    Header append Keep-Alive "timeout=5, max=100"
+
+    FileETag None
+</FilesMatch>
