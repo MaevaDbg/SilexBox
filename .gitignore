@@ -1,4 +1,4 @@
-/vendor/
-/app/cache/
+/vendor/*
+/app/cache/*
 /app/logs/silex.log
 composer.lock
