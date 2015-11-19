@@ -136,7 +136,7 @@ $beforeAdmin = function (Request $request) use ($app){
     $nameServer = $request->server->get('SERVER_NAME');
     $port = $request->server->get('SERVER_PORT');
 
-    if( $nameServer == 'localhost' || $port == '8080'){
+    if( $nameServer == 'silexbox.local' || $port == '8080'){
         return null;
     }else{
         return $app->redirect($app["url_generator"]->generate("homepage"));
@@ -177,12 +177,12 @@ $beforeAdmin = function (Request $request) use ($app){
             $em->persist($article);
             $em->flush();
             $app['session']->getFlashBag()->add('article', 'Votre article a bien été ajouté');
-            
+
             return $app->redirect($app["url_generator"]->generate("admin"));
         }
 
         return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Ajouter un article'));
-        
+
     })
     ->bind('add-article');
     /*-----  End of admin add article  ------*/
@@ -203,16 +203,16 @@ $beforeAdmin = function (Request $request) use ($app){
 
         if ($form->isValid()) {
             $new_article = $form->getData();
-            
+
             $em->persist($new_article);
             $em->flush();
             $app['session']->getFlashBag()->add('article', 'Votre article a bien été ajouté');
-            
+
             return $app->redirect($app["url_generator"]->generate("admin"));
         }
 
         return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Dupliquer un article'));
-        
+
     })
     ->bind('duplicate-article');
     /*-----  End of admin add article  ------*/
@@ -226,7 +226,7 @@ $beforeAdmin = function (Request $request) use ($app){
 
         $em = $app['orm.em'];
         $article = $em->getRepository("Entity\Article")->findOneById($id);
-        
+
         $form = $app['form.factory']->create(new ArticleType($app), $article);
         $form->handleRequest($request);
 
