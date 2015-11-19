@@ -184,6 +184,7 @@ $beforeAdmin = function (Request $request) use ($app){
         return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Ajouter un article'));
 
     })
+    ->before($beforeAdmin)
     ->bind('add-article');
     /*-----  End of admin add article  ------*/
 
@@ -214,6 +215,7 @@ $beforeAdmin = function (Request $request) use ($app){
         return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Dupliquer un article'));
 
     })
+    ->before($beforeAdmin)
     ->bind('duplicate-article');
     /*-----  End of admin add article  ------*/
 
@@ -243,6 +245,7 @@ $beforeAdmin = function (Request $request) use ($app){
         return $app['twig']->render('admin/article-form.html.twig', array('form' => $form->createView(), 'titre' => 'Modifier un article'));
 
     })
+    ->before($beforeAdmin)
     ->bind('update-article');
     /*-----  End of admin update article  ------*/
 
@@ -261,6 +264,7 @@ $beforeAdmin = function (Request $request) use ($app){
         return $app->redirect($app["url_generator"]->generate("admin"));
 
     })
+    ->before($beforeAdmin)
     ->bind('delete-article');
     /*-----  End of admin delete article  ------*/
 
