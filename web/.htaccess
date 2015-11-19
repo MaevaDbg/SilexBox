@@ -33,18 +33,14 @@ DefaultLanguage "fr"
 # ----------------------------------------------------------------------
 # Redirection
 # ----------------------------------------------------------------------
-# <IfModule mod_rewrite.c>
-#     Options -MultiViews
-#     RewriteEngine On
-#     RewriteBase /Silex/web
-#     RewriteCond %{REQUEST_FILENAME} !-f
-#     RewriteCond %{REQUEST_FILENAME} !-d
-#     RewriteRule ^ index.php [L]
-# </IfModule>
 <IfModule mod_rewrite.c>
     Options -MultiViews
 
     RewriteEngine On
+
+    #RewriteCond %{HTTP_HOST} ^www.monurl.fr [NC]
+    #RewriteRule ^(.*)$ http://monurl.fr/$1 [L,R=301]
+
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [QSA,L]
 </IfModule>
