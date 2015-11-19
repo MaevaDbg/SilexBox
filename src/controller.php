@@ -191,6 +191,20 @@ $beforeAdmin = function (Request $request) use ($app){
 
 
     /*===========================================
+    =            ADMIN - VIDER CACHE            =
+    ===========================================*/
+    $app->match('/admin/vider-cache', function (Request $request) use ($app) {
+
+        $app['twig']->clearCacheFiles();
+        return $app->redirect($app["url_generator"]->generate("homepage"));
+
+    })
+    ->bind('vider-cache');
+    /*-----  End of admin vider cache  ------*/
+
+
+
+    /*===========================================
     =            ADMIN - DUPLICATE ARTICLE            =
     ===========================================*/
     $app->match('/admin/duplicate-article/{id}', function ($id, Request $request) use ($app) {
