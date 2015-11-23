@@ -22,13 +22,13 @@
 
                 <figure>
                     {% if pushedArticle.image is not empty %}
-                        <a href="{{ path('article', {slug: pushedArticle.slug}) }}"><img src="{{ app.request.basepath }}/img/blog/{{ pushedArticle.image }}" alt=""></a>
+                        <a href="{{ path('article', {slug: pushedArticle.slug}) }}"><img src="{{ app.asset_path }}img/blog/{{ pushedArticle.image }}" alt=""></a>
                     {% endif %}
                     {% if pushedArticle.video is not empty %}
-                        <video poster="{{ app.request.basepath }}/img/blog/{{ pushedArticle.imageVideo }}" controls>
-                            <source src="{{ app.request.basepath }}/docs/{{ pushedArticle.video }}.mp4" type="video/mp4 " />
-                            <source src="{{ app.request.basepath }}/docs/{{ pushedArticle.video }}.ogv" type="video/ogg " />
-                            <source src="{{ app.request.basepath }}/docs/{{ pushedArticle.video }}.webm" type="video/webm " />
+                        <video poster="{{ app.asset_path }}img/blog/{{ pushedArticle.imageVideo }}" controls>
+                            <source src="{{ app.asset_path }}docs/{{ pushedArticle.video }}.mp4" type="video/mp4 " />
+                            <source src="{{ app.asset_path }}docs/{{ pushedArticle.video }}.ogv" type="video/ogg " />
+                            <source src="{{ app.asset_path }}docs/{{ pushedArticle.video }}.webm" type="video/webm " />
                             Désolée, votre navigateur ne lit pas les vidéos HTML5
                         </video>
                     {% endif %}
@@ -66,13 +66,13 @@
 
                     <figure>
                         {% if art.image is not empty %}
-                            <a href="{{ path('article', {slug: art.slug}) }}"><img src="{{ app.request.basepath }}/img/blog/{{ art.image }}" alt=""></a>
+                            <a href="{{ path('article', {slug: art.slug}) }}"><img src="{{ app.asset_path }}img/blog/{{ art.image }}" alt=""></a>
                         {% endif %}
                         {% if art.video is not empty %}
-                            <video poster="{{ app.request.basepath }}/img/blog/{{ art.imageVideo }}" controls>
-                                <source src="{{ app.request.basepath }}/docs/{{ art.video }}.mp4" type="video/mp4 " />
-                                <source src="{{ app.request.basepath }}/docs/{{ art.video }}.ogv" type="video/ogg " />
-                                <source src="{{ app.request.basepath }}/docs/{{ art.video }}.webm" type="video/webm " />
+                            <video poster="{{ app.asset_path }}img/blog/{{ art.imageVideo }}" controls>
+                                <source src="{{ app.asset_path }}docs/{{ art.video }}.mp4" type="video/mp4 " />
+                                <source src="{{ app.asset_path }}docs/{{ art.video }}.ogv" type="video/ogg " />
+                                <source src="{{ app.asset_path }}docs/{{ art.video }}.webm" type="video/webm " />
                                 Désolée, votre navigateur ne lit pas les vidéos HTML5
                             </video>
                         {% endif %}
