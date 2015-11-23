@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -16,7 +16,8 @@
     <meta name="description" content="{% block description '' %}">
     <meta name="author" content="Philharmonie de Paris" />
 
-    <link rel="icon" type="image/png" href="" />
+    <link href="{{ app.asset_path }}img/icons/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link href="{{ app.asset_path }}img/icons/favicon.png" rel="icon" type="image/png"/>
 
 </head>
 
@@ -25,7 +26,7 @@
         {# HEADER #}
         <header>
             <h1>{% trans %}titre{% endtrans %}</h1>
-            
+
             {# MENU #}
             {% set route = app.request.attributes.get('_route') %}
             {% set page = app.request.attributes.get('page') %}
@@ -45,7 +46,7 @@
                     </li>
                 </ul>
             </nav>
-            
+
             {# SWITCH LANG #}
             {% if app.request.locale == "fr" %}
                 {% if page is not empty %}
