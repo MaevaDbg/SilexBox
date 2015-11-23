@@ -43,7 +43,7 @@ $app->register(new Silex\Provider\HttpFragmentServiceProvider());
     }
 
 });*/
-
+$app['asset_path'] = '';
 
 /*====================================
 =            DOCTRINE ORM            =
