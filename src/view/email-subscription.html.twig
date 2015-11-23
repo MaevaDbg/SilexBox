@@ -1,4 +1,8 @@
 {% extends "_layout.html.twig" %}
+{% block title 'Inscription' %}
+{% block description 'Inscription description' %}
+{% block bodyId 'inscription' %}
+{% block bodyClass '' %}
 
 {% block content %}
 
@@ -7,5 +11,5 @@
     {% else %}
         {{ form(form) }}
     {% endif %}
-    
+
 {% endblock %}

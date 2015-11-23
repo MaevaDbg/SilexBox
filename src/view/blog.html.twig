@@ -2,9 +2,10 @@
 {% block title 'Blog' %}
 {% block description 'Blog description' %}
 {% block bodyId 'blog' %}
+{% block bodyClass '' %}
 
 {% block content %}
-    
+
     {# ALL ARTICLES #}
     {% if articles is empty %}
 	   <p>Il n'y a pas encore d'articles</p>
@@ -14,10 +15,10 @@
             <article>
 
                 <header>
-                    <h1><a href="{{ path('article', {slug: art.slug}) }}">{{ art.title|raw }}</a></h1>      
+                    <h1><a href="{{ path('article', {slug: art.slug}) }}">{{ art.title|raw }}</a></h1>
                     <time datetime="{{ art.datePublication|localizeddate }}">{{ art.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</time>
                 </header>
-                
+
                 <figure>
                     {% if art.image is not empty %}
                         <a href="{{ path('article', {slug: art.slug}) }}"><img src="{{ app.request.basepath }}/img/blog/{{ art.image }}" alt=""></a>
@@ -36,15 +37,15 @@
                         </div>
                     {% endif %}
                 </figure>
-                
+
                 <section>
                     {{ art.excerpt|raw }}
                     <p><a href="{{ path('article', {slug: art.slug}) }}">Lire la suite</a></p>
                 </section>
-            
+
             </article>
         {% endfor %}
 
     {% endif %}
-    
+
 {% endblock %}

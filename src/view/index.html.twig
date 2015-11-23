@@ -2,6 +2,7 @@
 {% block title 'Accueil' %}
 {% block description 'Accueil description' %}
 {% block bodyId 'home' %}
+{% block bodyClass '' %}
 
 {% block content %}
 
@@ -15,7 +16,7 @@
             <article>
 
                 <header>
-                    <h1><a href="{{ path('article', {slug: pushedArticle.slug}) }}">{{ pushedArticle.title|raw }}</a></h1>      
+                    <h1><a href="{{ path('article', {slug: pushedArticle.slug}) }}">{{ pushedArticle.title|raw }}</a></h1>
                     <time datetime="{{ pushedArticle.datePublication|localizeddate }}">{{ pushedArticle.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</time>
                 </header>
 
@@ -37,7 +38,7 @@
                         </div>
                     {% endif %}
                 </figure>
-                
+
                 <section>
                     {{ pushedArticle.excerpt|raw }}
                     <p><a href="{{ path('article', {slug: pushedArticle.slug}) }}">Lire la suite</a></p>
@@ -59,10 +60,10 @@
                 <article>
 
                     <header>
-                        <h1><a href="{{ path('article', {slug: art.slug}) }}">{{ art.title|raw }}</a></h1>      
+                        <h1><a href="{{ path('article', {slug: art.slug}) }}">{{ art.title|raw }}</a></h1>
                         <time datetime="{{ art.datePublication|localizeddate }}">{{ art.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</time>
                     </header>
-                    
+
                     <figure>
                         {% if art.image is not empty %}
                             <a href="{{ path('article', {slug: art.slug}) }}"><img src="{{ app.request.basepath }}/img/blog/{{ art.image }}" alt=""></a>
@@ -81,12 +82,12 @@
                             </div>
                         {% endif %}
                     </figure>
-                    
+
                     <section>
                         {{ art.excerpt|raw }}
                         <p><a href="{{ path('article', {slug: art.slug}) }}">Lire la suite</a></p>
                     </section>
-                
+
                 </article>
             {% endfor %}
 

@@ -2,16 +2,17 @@
 {% block title article.title %}
 {% block description article.excerpt %}
 {% block bodyId 'article' %}
+{% block bodyClass '' %}
 
 {% block content %}
 
     <article>
 
         <header>
-            <h1>{{ article.title|raw }}</h1>      
+            <h1>{{ article.title|raw }}</h1>
             <time datetime="{{ article.datePublication|localizeddate }}">{{ article.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</time>
         </header>
-        
+
         <figure>
             {% if article.image is not empty %}
                 <img src="{{ app.request.basepath }}/img/blog/{{ article.image }}" alt="">
@@ -30,11 +31,11 @@
                 </div>
             {% endif %}
         </figure>
-        
+
         <section>
             {{ article.content|raw }}
         </section>
-    
+
     </article>
 
 {% endblock %}
