@@ -7,7 +7,7 @@
 {% block content %}
 
     {% if data is defined %}
-        {{ dump(data) }}
+        {{ data.email }}
     {% else %}
         {{ form(form) }}
     {% endif %}

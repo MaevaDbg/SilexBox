@@ -288,6 +288,8 @@ $beforeAdmin = function (Request $request) use ($app){
 =            ERREUR            =
 ==============================*/
 $app->error(function (\Exception $e, $code) use ($app) {
+    var_dump($code);
+    var_dump($e);
     if ($app['debug']) {
         return;
     }
