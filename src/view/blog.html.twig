@@ -16,24 +16,28 @@
 
                 <header>
                     <h1><a href="{{ path('article', {slug: art.slug}) }}">{{ art.title|raw }}</a></h1>
-                    <time datetime="{{ art.datePublication|localizeddate }}">{{ art.datePublication|localizeddate("short", "none", null, null, "dd/M/yy") }}</time>
+                    <time datetime="{{ art.datePublication|localizeddate("short", "none", "fr", null, "yyyy-M-dd") }}">
+                        {{ art.datePublication|localizeddate("long", "none", "fr", null, "dd MMMM yyyy") }}
+                    </time>
                 </header>
 
                 <figure>
                     {% if art.image is not empty %}
-                        <a href="{{ path('article', {slug: art.slug}) }}"><img src="{{ app.request.basepath }}/img/blog/{{ art.image }}" alt=""></a>
+                        <a href="{{ path('article', {slug: art.slug}) }}">
+                            <img src="{{ app.asset_path }}img/blog/{{ art.image }}" alt="Illustration article">
+                        </a>
                     {% endif %}
                     {% if art.video is not empty %}
-                        <video poster="{{ app.request.basepath }}/img/blog/{{ art.imageVideo }}" controls>
-                            <source src="{{ app.request.basepath }}/docs/{{ art.video }}.mp4" type="video/mp4 " />
-                            <source src="{{ app.request.basepath }}/docs/{{ art.video }}.ogv" type="video/ogg " />
-                            <source src="{{ app.request.basepath }}/docs/{{ art.video }}.webm" type="video/webm " />
+                        <video poster="{{ app.asset_path }}img/blog/{{ art.imageVideo }}" controls>
+                            <source src="{{ app.asset_path }}videos/{{ art.video }}.mp4" type="video/mp4" />
+                            <source src="{{ app.asset_path }}videos/{{ art.video }}.ogv" type="video/ogg" />
+                            <source src="{{ app.asset_path }}videos/{{ art.video }}.webm" type="video/webm" />
                             Désolée, votre navigateur ne lit pas les vidéos HTML5
                         </video>
                     {% endif %}
                     {% if art.lienYoutube is not empty %}
                         <div class="youtube-video">
-                            <iframe width="640" height="360" src="//{{ art.lienyoutube }}" frameborder="0" allowfullscreen></iframe>
+                            <iframe width="640" height="360" src="{{ art.lienyoutube }}" frameborder="0" allowfullscreen></iframe>
                         </div>
                     {% endif %}
                 </figure>
